@@ -1,46 +1,57 @@
-from bs4 import *
-import urllib
-import urllib.request
-import web_page
-import re
+import requests
+from newsapi import *  # NewsAPI key: 803ed7b8cbbf4e9b8b315641f2124c69
+import json
 
 
-def pull_top_stories_CNN():
-    url = 'http://www.cnn.com/politics'
-    response = urllib.request.urlopen(url)
-    soup = BeautifulSoup(response.read(), "lxml")
-    links = []
-    pattern = re.compile(r'\"uri\":\"(.*?)\"')
+def topStories(newsAPI, source):
+    authors = []
+    titles = []
+    descriptions = []
+    urls = []
+    images = []
+    timeDate = []
 
-    prettyHTML = open("prettyHTML.html", 'w+')
-    prettyHTML = soup.prettify()
-    prettyHTML.close()
+    politics = newsAPI.get_top_headlines(sources=source)
+    politicsDump = json.dumps(politics)
+    parseList = json.loads(politicsDump)
 
-    for script in soup.find_all("script", text=pattern):
-        match = pattern.findall(script.text)
-        if match:
-            for i in range(len(match)):
-                newURL = url[0:18]+match[i]
-                links.append(newURL)
-                #print(newURL)
+    for title in parseList['articles']:
+        #print(title['title'])
+        titles.append(title['title'])
+    #print(titles)
 
-    print(links)
+    for author in parseList['articles']:
+        #print(author['author'])
+        authors.append(author['author'])
+    #print(authors)
 
-def pull_top_stories_Fox():
-    url = 'http://www.foxnews.com/politics.html'
-    response = urllib.request.urlopen(url)
-    soup = BeautifulSoup(response.read(), "lxml")
-    trendingLinks = []
+    for description in parseList['articles']:
+        #print(description['description'])
+        descriptions.append(description['description'])
+    #print(descriptions)
 
-    for link in soup.find_all('a', {'data-omtr-intcmp': lambda L: L and L.startswith('trending')}, href=True):
-        trendingLinks.append(link['href'])
+    for url in parseList['articles']:
+        #print(url['url'])
+        urls.append(url['url'])
+    #print(urls)
 
-    print(trendingLinks)
+    for image in parseList['articles']:
+        #print(image['urlToImage'])
+        images.append(image['urlToImage'])
+    #print(images)
+
+    for published in parseList['articles']:
+        #print(published['publishedAt'])
+        timeDate.append(published['publishedAt'])
+    #print(timeDate)
+
+    return titles, authors, descriptions, urls, images, timeDate
+
 
 def main():
-    pull_top_stories_CNN()
-    pull_top_stories_Fox()
-    #web_page.main()
+    newsAPI = NewsApiClient(api_key='803ed7b8cbbf4e9b8b315641f2124c69')
+    topStories(newsAPI, 'cnn')
+
 
 if __name__ == '__main__':
     main()
