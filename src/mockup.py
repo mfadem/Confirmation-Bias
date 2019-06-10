@@ -1,12 +1,35 @@
-import webbrowser
-from top_stories import *
-from tkinter import *
-from urllib.request import *
-from PIL import ImageTk, Image
+"""
+Project: Conformation Bias: The news you care about
+File: mockup.py
+Author: Michael Fadem
+Date: 5/26/19
+Language: Python 3.7.3
+Purpose: Generate a mockup GUI displaying the top news stories based on the user selected bias
+Restrictions: None
+Steps:
+    TODO
+"""
+
+
+# Imports for relevant libraries
 import io
+import webbrowser
+import requests
+
+from tkinter import *
+from PIL import ImageTk, Image
+from top_stories import *
 
 
 class MockUp:
+    """
+    Function: Hyperlink
+    Class: Mockup
+    Author: Michael Fadem
+    Purpose: Set initial values of the GUI
+    Restrictions: None
+    Notes: None
+    """
     def __init__(self, master):
 
         self.bias = "Independent"
@@ -22,6 +45,14 @@ class MockUp:
         self.pop = Button(master, text="Top Stories", command=self.Populate)
         self.pop.pack()
 
+    """
+    Function: Hyperlink
+    Class: Mockup
+    Author: Michael Fadem
+    Purpose: Change scale label based on the bias slider
+    Restrictions: None
+    Notes: None
+    """
     def Bias(self, arg):
         if self.scale.get() == 0:
             self.label.config(text="Bias: Independent")
@@ -45,6 +76,14 @@ class MockUp:
             self.label.config(text="Bias: Far Left")
             self.bias = "Far Left"
 
+    """
+    Function: Hyperlink
+    Class: Mockup
+    Author: Michael Fadem
+    Purpose: Populate the GUI with new stories
+    Restrictions: None
+    Notes: None
+    """
     def Populate(self):
         authors = []
         titles = []
@@ -92,19 +131,37 @@ class MockUp:
             link.pack()
             link.bind('<Button-1>', self.Hyperlink)
 
+    """
+    Function: Hyperlink
+    Class: Mockup
+    Author: Michael Fadem
+    Purpose: Open news story hyperlink in the system's default browser
+    Restrictions: None
+    Notes: None
+    """
     def Hyperlink(self, url):
-        #print(url.widget.cget("text"))
         webbrowser.open(url.widget.cget("text"))
 
+
+"""
+Function: Main
+Class: None
+Author: Michael Fadem
+Purpose: Generate GUI window
+Restrictions: None
+Notes: None
+"""
 def main():
     root = Tk()
     root.title("Confirmation Bias")
     root.geometry("700x500")
+    root.state('zoomed')
     root.resizable(width=True, height=True)
     root.configure(background="white")
     GUI = MockUp(root)
     root.mainloop()
 
 
+# Program Entry Point
 if __name__ == '__main__':
     main()
