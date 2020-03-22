@@ -1,0 +1,12 @@
+# Dev Folders
+.vscode
+venv
+
+# Runtime Folders
+__pycache__
+
+# Config Files
+config.yaml
+
+# Intermediate Files
+news.json
