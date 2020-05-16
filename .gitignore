@@ -6,7 +6,7 @@ venv
 __pycache__
 
 # Config Files
-config.yaml
+config.json
 
 # Intermediate Files
 news.json

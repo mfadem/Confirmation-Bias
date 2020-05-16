@@ -10,7 +10,7 @@ class NewsStoriesClass:
         with open(json_file, 'r') as json_config:
             dict_config = json.load(json_config)
             self.api_key = dict_config["api-key"]
-            print(self.api_key)
+            # print(self.api_key)
 
         # https://www.reddit.com/r/webdev/comments/a5hdkk/how_should_i_handle_having_api_keys_in_my_app/ebmtcdl?utm_source=share&utm_medium=web2x
         # https://stackoverflow.com/questions/44342276/how-to-push-code-to-github-hiding-the-api-keys
