@@ -1,0 +1,9 @@
+# Dev Folders
+.vscode
+venv
+
+# Runtime Folders
+__pycache__
+
+# User/Program JSON Files
+*.json
